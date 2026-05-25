@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MedicalRecordController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +48,18 @@ Route::middleware(['auth:web', 'prevent.back.logout'])->group(function () {
 
     // Medical Records Routes
     Route::resource('medical-records', MedicalRecordController::class);
+
+    // Admin Routes - Protected by check.admin middleware
+    Route::prefix('admin')->name('admin.')->middleware('check.admin')->group(function () {
+        Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('users', [AdminDashboardController::class, 'users'])->name('users');
+        Route::get('users/{user}', [AdminDashboardController::class, 'viewUser'])->name('view-user');
+        Route::post('users/{user}/make-admin', [AdminDashboardController::class, 'makeAdmin'])->name('make-admin');
+        Route::post('users/{user}/remove-admin', [AdminDashboardController::class, 'removeAdmin'])->name('remove-admin');
+        Route::get('records', [AdminDashboardController::class, 'records'])->name('records');
+        Route::delete('records/{record}', [AdminDashboardController::class, 'deleteRecord'])->name('delete-record');
+        Route::get('activities', [AdminDashboardController::class, 'activities'])->name('activities');
+    });
 });
 
 // Home Route

@@ -611,6 +611,11 @@
             <nav class="nav-tabs">
                 <a href="{{ route('medical-records.index') }}" class="nav-tab @if(request()->routeIs('medical-records.index')) active @endif">Dashboard</a>
                 <a href="{{ route('medical-records.create') }}" class="nav-tab @if(request()->routeIs('medical-records.create')) active @endif">Add Record</a>
+                @if(auth()->user()->isAdmin())
+                    <a href="{{ route('admin.dashboard') }}" class="nav-tab @if(request()->routeIs('admin.*')) active @endif" style="color: #fbbf24;">
+                        <i class="fas fa-shield-alt" style="margin-right: 6px;"></i>Admin Panel
+                    </a>
+                @endif
                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                     @csrf
                     <button type="submit" class="nav-tab" style="background: none; border: none; cursor: pointer; padding: 8px 4px; font-size: 14px; font-weight: 500;">

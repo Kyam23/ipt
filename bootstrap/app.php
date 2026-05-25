@@ -16,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'redirect.authenticated' => \App\Http\Middleware\RedirectIfAuthenticated::class,
             'disable.auth.cache' => \App\Http\Middleware\DisableAuthPageCaching::class,
             'prevent.back.logout' => \App\Http\Middleware\PreventBackAfterLogout::class,
+            'check.admin' => \App\Http\Middleware\CheckAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
